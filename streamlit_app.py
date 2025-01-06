@@ -1,6 +1,7 @@
 import streamlit as st
 import random
 import webbrowser
+from urllib.parse import quote
 
 def generate_title_prompt(topik, audiens, durasi):
     return f"""Tolong buatkan judul presentasi yang menarik dan profesional untuk presentasi berdurasi {durasi} menit tentang {topik}. 
@@ -21,11 +22,40 @@ Harap sertakan:
 Format outline dengan struktur hierarki yang jelas dan perkiraan alokasi waktu untuk setiap bagian.
 Seluruh outline dalam Bahasa Indonesia."""
 
-def open_chatgpt_with_prompt(prompt):
-    # URL encode the prompt and create the ChatGPT URL
-    encoded_prompt = prompt.replace('\n', '%0A')
-    chatgpt_url = f"https://chat.openai.com/chat?prompt={encoded_prompt}"
-    return chatgpt_url
+def open_in_chatgpt(prompt):
+    # Properly encode the prompt for URL
+    encoded_prompt = quote(prompt)
+    chatgpt_url = f"https://chat.openai.com/?prompt={encoded_prompt}"
+    # Open in new tab using JavaScript
+    js = f"""
+        <script>
+        function open_chatgpt() {{
+            window.open('{chatgpt_url}', '_blank');
+        }}
+        </script>
+        <button 
+            onclick="open_chatgpt()"
+            style="
+                background-color: #10a37f;
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 0.375rem;
+                border: none;
+                cursor: pointer;
+                font-size: 1rem;
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+            "
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Buka di ChatGPT
+        </button>
+        """
+    return js
 
 def main():
     st.set_page_config(page_title="Generator Prompt Presentasi AI", page_icon="📊")
@@ -76,16 +106,15 @@ def main():
         title_prompt = generate_title_prompt(topik, audiens, durasi)
         st.code(title_prompt, language="text")
         
-        col1, col2 = st.columns(2)
+        col1, col2 = st.columns([1, 2])
         
         # Copy button for title prompt
-        if col1.button("Salin Prompt Judul", key="copy_title"):
+        if col1.button("📋 Salin Prompt", key="copy_title"):
             st.toast("Prompt judul disalin ke clipboard!")
-            
+        
         # ChatGPT button for title prompt
-        if col2.button("Buka dengan ChatGPT", key="chatgpt_title"):
-            chatgpt_url = open_chatgpt_with_prompt(title_prompt)
-            st.markdown(f'<a href="{chatgpt_url}" target="_blank">Klik untuk membuka di ChatGPT</a>', unsafe_allow_html=True)
+        with col2:
+            st.markdown(open_in_chatgpt(title_prompt), unsafe_allow_html=True)
             
         st.markdown("---")
         
@@ -94,16 +123,15 @@ def main():
         outline_prompt = generate_outline_prompt(topik, audiens, durasi, gaya)
         st.code(outline_prompt, language="text")
         
-        col3, col4 = st.columns(2)
+        col3, col4 = st.columns([1, 2])
         
         # Copy button for outline prompt
-        if col3.button("Salin Prompt Outline", key="copy_outline"):
+        if col3.button("📋 Salin Prompt", key="copy_outline"):
             st.toast("Prompt outline disalin ke clipboard!")
-            
+        
         # ChatGPT button for outline prompt
-        if col4.button("Buka dengan ChatGPT", key="chatgpt_outline"):
-            chatgpt_url = open_chatgpt_with_prompt(outline_prompt)
-            st.markdown(f'<a href="{chatgpt_url}" target="_blank">Klik untuk membuka di ChatGPT</a>', unsafe_allow_html=True)
+        with col4:
+            st.markdown(open_in_chatgpt(outline_prompt), unsafe_allow_html=True)
         
         # Tips
         st.markdown("---")
