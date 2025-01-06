@@ -30,7 +30,12 @@ def create_chatgpt_link(prompt):
     return f'<a href="https://chat.openai.com/?prompt={encoded_prompt}" target="_blank" style="display: inline-block; background-color: #10a37f; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 0.375rem; font-weight: 500;">💬 Buka di ChatGPT</a>'
 
 def main():
-    st.set_page_config(page_title="AI Prompt Generator untuk Presentasi", page_icon="🧑‍💻", initial_sidebar_state="auto", menu_items=None)
+    st.set_page_config(page_title="AI Prompt Generator untuk Presentasi", page_icon="🧑‍💻", initial_sidebar_state="auto", 
+    menu_items={
+        'Get Help': 'https://www.extremelycoolapp.com/help',
+        'Report a bug': "https://www.extremelycoolapp.com/bug",
+        'About': "# This is a header. This is an *extremely* cool app!"
+    })
     
     st.title("🧑‍💻 AI Prompt Generator untuk Presentasi")
     st.write("Bantu buat AI Prompt untuk Menghasilkan Ide Judul dan Outline Presentasi")
