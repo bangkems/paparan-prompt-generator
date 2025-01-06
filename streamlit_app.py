@@ -79,10 +79,8 @@ def main():
         st.markdown("### 📝 Prompt Presentasi")
         st.code(combined_prompt, language="text")
         
-        # Center the ChatGPT button
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col1:
-            st.markdown(create_chatgpt_link(combined_prompt), unsafe_allow_html=True)
+        # Shortcut ke ChatGPT
+        st.markdown(create_chatgpt_link(combined_prompt), unsafe_allow_html=True)
         
         
         # Tips
