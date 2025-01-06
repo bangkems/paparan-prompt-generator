@@ -2,6 +2,10 @@ import streamlit as st
 import random
 from urllib.parse import quote
 
+#MainMenu {
+  visibility: hidden;
+}
+
 def generate_prompt(topik, audiens, durasi, gaya):
     return f"""[JUDUL]
 Tolong buatkan judul presentasi yang menarik dan profesional untuk presentasi berdurasi {durasi} menit tentang {topik}. 
