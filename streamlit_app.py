@@ -2,13 +2,6 @@ import streamlit as st
 import random
 from urllib.parse import quote
 
-# Add custom CSS to hide the GitHub icon
-hide_github_icon = """
-#GithubIcon {
-  visibility: hidden;
-}
-"""
-st.markdown(hide_github_icon, unsafe_allow_html=True)
 
 def generate_prompt(topik, audiens, durasi, gaya):
     return f"""[JUDUL]
@@ -37,7 +30,7 @@ def create_chatgpt_link(prompt):
     return f'<a href="https://chat.openai.com/?prompt={encoded_prompt}" target="_blank" style="display: inline-block; background-color: #10a37f; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 0.375rem; font-weight: 500;">💬 Buka di ChatGPT</a>'
 
 def main():
-    st.set_page_config(page_title="AI Prompt Generator untuk Presentasi", page_icon="🧑‍💻")
+    st.set_page_config(page_title="AI Prompt Generator untuk Presentasi", page_icon="🧑‍💻", initial_sidebar_state="auto", menu_items=None)
     
     st.title("🧑‍💻 AI Prompt Generator untuk Presentasi")
     st.write("Bantu buat AI Prompt untuk Menghasilkan Ide Judul dan Outline Presentasi")
